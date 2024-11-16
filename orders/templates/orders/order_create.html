@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% load static %} {%block title %} Order Create
+{%endblock %} {% block content %}
+
+<div class="shadow-md p-4">
+  <!-- <form action="" method="post">
+    <h2 class="text-indigo-600 text-2xl font-semibold mb-4">Checkout</h2>
+    {%csrf_token%} {{form.as_p}}
+    <button
+      type="submit"
+      class="bg-indigo-600 text-white px-2 py-1 rounded mt-3"
+    >
+      Place Order
+    </button>
+  </form> -->
+  <form action="" method="post">
+    <h2 class="text-indigo-600 text-2xl font-semibold mb-4">Checkout</h2>
+    {% csrf_token %}
+    <div class="mb-2">
+      <label for="id_name" class="block font-bold text-gray-700"
+        >{{ form.full_name.label }}:</label
+      >
+      {{ form.full_name }}
+    </div>
+    <div class="mb-2">
+      <label for="id_email" class="block font-bold text-gray-700"
+        >{{ form.email.label }}:</label
+      >
+      {{ form.email }}
+    </div>
+    <div class="mb-2">
+      <label for="id_email" class="block font-bold text-gray-700"
+        >{{ form.address.label }}:</label
+      >
+      {{ form.address }}
+    </div>
+    <button
+      type="submit"
+      class="bg-indigo-600 text-white px-2 py-1 rounded mt-3"
+    >
+      Place Order
+    </button>
+  </form>
+</div>
+
+<style>
+  form input {
+    width: 40%;
+    padding: 3px;
+    border: 1px solid gray;
+    border-radius: 4px;
+  }
+</style>
+{% endblock %}

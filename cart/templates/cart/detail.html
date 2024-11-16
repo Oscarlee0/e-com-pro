@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% load static %} {%block title %}Cart
+Details{%endblock %} {% block content %}
+<h1 class="text-2xl font-semibold mb-4">My cart</h1>
+
+{%if cart %}
+<ul class="space-y-4">
+  {%for item in cart.items.all %}
+  <li class="flex items-center p-4 border-b border-gray-300">
+    {%if item.product.image%}
+    <img
+      src="{{item.product.image.url}}"
+      alt="{{item.product.name}}"
+      class="w-20 h-20 rounded"
+    />
+    {%endif%}
+    <div class="flex-grow">
+      <a
+        href="{%url 'products:product_detail' item.product.id item.product.slug%}"
+      >
+        <h3 class="font-semibold text-lg">{{item.product.name}}</h3>
+      </a>
+      <p class="text-gray-700">{{item.product.description}}</p>
+      <p class="text-indigo-600">${{item.product.price}}</p>
+      <p class="text-gray-600">Quantity: {{item.quantity}}</p>
+      <div class="flex-shrink-0 ml-auto">
+        <form action="{%url 'cart:remove_item' item.id %}" method="post">
+          {%csrf_token%}
+          <button
+            type="submit"
+            class="bg-red-600 text-white px-2 py-1 rounded text-xs"
+          >
+            Remove
+          </button>
+        </form>
+      </div>
+    </div>
+  </li>
+  {%endfor%}
+</ul>
+
+<p class="mt-2">
+  <strong>Total price: ${{cart.get_total_price}}</strong>
+</p>
+{%else%}
+<p>Your Cart is Empty</p>
+{% endif %}
+<form action="{% url 'orders:order_create' %}" method="post">
+  {%csrf_token%}
+  <button type="submit" class="bg-indigo-600 text-white px-2 py-1 rounded mt-3">
+    Proceed To Checkout
+  </button>
+</form>
+{% endblock %}
